@@ -7,5 +7,23 @@
     "_id": "5688a5f8523343aa26655dc1",
     "createdAt": "2026-07-06T12:13:58.499Z",
     "updatedAt": "2026-07-06T12:13:58.499Z"
+  },
+  {
+    "user": "209f61a5dc4b60c148dba73f",
+    "action": "user-signup",
+    "description": "Test User created an account",
+    "metadata": {},
+    "_id": "66b424c268d38bc39a5bc4ba",
+    "createdAt": "2026-07-06T13:49:08.555Z",
+    "updatedAt": "2026-07-06T13:49:08.555Z"
+  },
+  {
+    "user": "209f61a5dc4b60c148dba73f",
+    "action": "user-login",
+    "description": "Test User logged in",
+    "metadata": {},
+    "_id": "263b0f816575cfcf53e3c9f7",
+    "createdAt": "2026-07-06T13:51:30.252Z",
+    "updatedAt": "2026-07-06T13:51:30.252Z"
   }
 ]

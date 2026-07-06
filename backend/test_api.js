@@ -2,14 +2,14 @@ const http = require('http');
 
 const data = JSON.stringify({
   name: "Test User",
-  email: "test@example.com",
+  email: "test2@example.com",
   password: "password123"
 });
 
 const options = {
   hostname: 'localhost',
   port: 5000,
-  path: '/api/auth/signup',
+  path: '/api/auth/login',
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-const JsonModel = require('../data/jsonModel');
+const JsonModel = require('./jsonModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');

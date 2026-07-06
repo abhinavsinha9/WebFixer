@@ -100,7 +100,7 @@ class JsonQuery {
 class JsonModel {
   constructor(modelName, methods = {}, statics = {}) {
     this.modelName = modelName;
-    this.filePath = path.join(__dirname, `${modelName.toLowerCase()}s.json`);
+    this.filePath = path.join(__dirname, '..', 'data', `${modelName.toLowerCase()}s.json`);
     this.methods = methods;
     Object.assign(this, statics);
     // ensure file immediately so methods don't crash
@@ -235,16 +235,22 @@ class JsonModel {
     return promiseLike;
   }
 
-  async findOne(query) {
-    const data = await this._readData();
-    const item = data.find(item => this._matchQuery(item, query));
-    if (item) {
-       return this._createInstance(item);
-    }
-    return null;
+  findOne(query) {
+    const promiseLike = {
+      then: (resolve, reject) => {
+        return this._readData().then(data => {
+          const item = data.find(item => this._matchQuery(item, query));
+          if (item) return this._createInstance(item);
+          return null;
+        }).then(resolve).catch(reject);
+      },
+      select: () => promiseLike,
+      populate: () => promiseLike
+    };
+    return promiseLike;
   }
 
-  async findById(id) {
+  findById(id) {
     return this.findOne({ _id: id });
   }
 

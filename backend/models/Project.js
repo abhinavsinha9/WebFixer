@@ -1,4 +1,4 @@
-const JsonModel = require('../data/jsonModel');
+const JsonModel = require('./jsonModel');
 
 class ProjectModel extends JsonModel {
   constructor() {

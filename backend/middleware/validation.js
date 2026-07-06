@@ -85,7 +85,7 @@ const validateBugUpdate = [
 
 // ID validation
 const validateObjectId = [
-  param('id').isMongoId().withMessage('Invalid ID format'),
+  param('id').isString().isLength({ min: 24, max: 24 }).withMessage('Invalid ID format'),
   handleValidation
 ];
 

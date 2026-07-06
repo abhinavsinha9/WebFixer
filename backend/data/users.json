@@ -30,5 +30,38 @@
     "updatedAt": "2026-07-06T12:13:58.487Z",
     "emailVerificationToken": "da0b6cf2b2dc3927a23ad564793139aaa1f548ee3bb21495fc437d93fd625b19",
     "emailVerificationExpire": "2026-07-07T12:13:58.484Z"
+  },
+  {
+    "name": "Test User",
+    "email": "test2@example.com",
+    "password": "$2a$12$H2GH76tz2KLFc7PHhB5ByOT4e4s3H2LIQim7JeuQbtYF1P7xnuEm.",
+    "role": "developer",
+    "company": "",
+    "bio": "",
+    "website": "",
+    "location": "",
+    "github": "",
+    "isEmailVerified": false,
+    "loginAttempts": 0,
+    "projectCount": 0,
+    "bugsFound": 0,
+    "bugsFixed": 0,
+    "preferences": {
+      "theme": "dark",
+      "language": "en",
+      "notifications": {
+        "email": true,
+        "push": true,
+        "bugAlerts": true,
+        "reportReady": true
+      }
+    },
+    "apiKeys": [],
+    "_id": "209f61a5dc4b60c148dba73f",
+    "createdAt": "2026-07-06T13:49:08.539Z",
+    "updatedAt": "2026-07-06T13:51:30.246Z",
+    "emailVerificationToken": "78da56e226d57e543458e51d971e1511c5fb47a5d525db82bd023fe4cec4ac08",
+    "emailVerificationExpire": "2026-07-07T13:49:08.549Z",
+    "lastLogin": "2026-07-06T13:51:30.245Z"
   }
 ]
