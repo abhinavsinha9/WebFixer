@@ -155,21 +155,21 @@ exports.getBugStats = async (req, res) => {
   try {
     const [severityStats, categoryStats, statusStats, timeline] = await Promise.all([
       Bug.aggregate([
-        { $match: { project: new (require('mongoose').Types.ObjectId)(req.params.projectId) } },
+        { $match: { project: req.params.projectId } },
         { $group: { _id: '$severity', count: { $sum: 1 } } }
       ]),
       Bug.aggregate([
-        { $match: { project: require('mongoose').Types.ObjectId(req.params.projectId) } },
+        { $match: { project: req.params.projectId } },
         { $group: { _id: '$category', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 }
       ]),
       Bug.aggregate([
-        { $match: { project: require('mongoose').Types.ObjectId(req.params.projectId) } },
+        { $match: { project: req.params.projectId } },
         { $group: { _id: '$status', count: { $sum: 1 } } }
       ]),
       Bug.aggregate([
-        { $match: { project: require('mongoose').Types.ObjectId(req.params.projectId) } },
+        { $match: { project: req.params.projectId } },
         { $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
           count: { $sum: 1 }

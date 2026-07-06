@@ -9,7 +9,6 @@ const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
 
-const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 
 // Route imports
@@ -39,8 +38,7 @@ const io = new Server(server, {
 // Make io accessible to routes
 app.set('io', io);
 
-// Connect to MongoDB
-connectDB();
+// Storage initialized via data models
 
 // Security middleware
 app.use(helmet({
@@ -120,6 +118,14 @@ io.on('connection', (socket) => {
 
 // Error handler (must be last)
 app.use(errorHandler);
+
+// Root route to prevent 404 on base URL (e.g. Render health checks)
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'BugFinder API is running'
+  });
+});
 
 // Handle unhandled routes
 app.use('*', (req, res) => {

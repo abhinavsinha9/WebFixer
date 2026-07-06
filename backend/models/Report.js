@@ -1,139 +1,47 @@
-const mongoose = require('mongoose');
+const JsonModel = require('../data/jsonModel');
 
-const reportSchema = new mongoose.Schema({
-  project: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project',
-    required: true
-  },
-  generatedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  title: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  type: {
-    type: String,
-    enum: ['bug-report', 'performance', 'accessibility', 'seo', 'security', 'code-quality', 'full-audit', 'improvement', 'documentation'],
-    required: true
-  },
-  format: {
-    type: String,
-    enum: ['pdf', 'csv', 'excel', 'json', 'markdown'],
-    default: 'pdf'
-  },
-  status: {
-    type: String,
-    enum: ['generating', 'ready', 'failed'],
-    default: 'generating'
-  },
-  data: {
-    summary: String,
-    score: Number,
-    totalIssues: Number,
-    criticalIssues: Number,
-    categories: mongoose.Schema.Types.Mixed,
-    recommendations: [String],
-    details: mongoose.Schema.Types.Mixed
-  },
-  fileUrl: {
-    type: String,
-    default: ''
-  },
-  fileSize: {
-    type: Number,
-    default: 0
-  },
-  downloadCount: {
-    type: Number,
-    default: 0
+class ReportModel extends JsonModel {
+  constructor() {
+    super('Report');
   }
-}, {
-  timestamps: true
-});
-
-reportSchema.index({ project: 1, type: 1 });
-reportSchema.index({ generatedBy: 1 });
-
-// --- Notification Model ---
-const notificationSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  type: {
-    type: String,
-    enum: ['success', 'warning', 'error', 'info', 'bug-found', 'analysis-complete', 'report-ready'],
-    default: 'info'
-  },
-  title: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  message: {
-    type: String,
-    required: true
-  },
-  link: {
-    type: String,
-    default: ''
-  },
-  read: {
-    type: Boolean,
-    default: false
-  },
-  project: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project'
+  async create(data) {
+    data.format = data.format || 'pdf';
+    data.status = data.status || 'generating';
+    data.fileUrl = data.fileUrl || '';
+    data.fileSize = data.fileSize || 0;
+    data.downloadCount = data.downloadCount || 0;
+    data.data = data.data || {};
+    return super.create(data);
   }
-}, {
-  timestamps: true
-});
+}
 
-notificationSchema.index({ user: 1, read: 1, createdAt: -1 });
-
-const Notification = mongoose.model('Notification', notificationSchema);
-
-// --- Activity Model ---
-const activitySchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  action: {
-    type: String,
-    required: true,
-    enum: ['project-created', 'project-deleted', 'analysis-started', 'analysis-completed',
-           'bug-created', 'bug-updated', 'bug-resolved', 'report-generated',
-           'user-login', 'user-signup', 'settings-updated', 'file-uploaded']
-  },
-  description: {
-    type: String,
-    default: ''
-  },
-  project: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project'
-  },
-  metadata: {
-    type: mongoose.Schema.Types.Mixed,
-    default: {}
+class NotificationModel extends JsonModel {
+  constructor() {
+    super('Notification');
   }
-}, {
-  timestamps: true
-});
+  async create(data) {
+    data.type = data.type || 'info';
+    data.link = data.link || '';
+    data.read = data.read || false;
+    return super.create(data);
+  }
+}
 
-activitySchema.index({ user: 1, createdAt: -1 });
+class ActivityModel extends JsonModel {
+  constructor() {
+    super('Activity');
+  }
+  async create(data) {
+    data.description = data.description || '';
+    data.metadata = data.metadata || {};
+    return super.create(data);
+  }
+}
 
-const Activity = mongoose.model('Activity', activitySchema);
+const Report = new ReportModel();
+const Notification = new NotificationModel();
+const Activity = new ActivityModel();
 
-module.exports = mongoose.model('Report', reportSchema);
+module.exports = Report;
 module.exports.Notification = Notification;
 module.exports.Activity = Activity;

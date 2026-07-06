@@ -1,105 +1,42 @@
-const mongoose = require('mongoose');
+const JsonModel = require('../data/jsonModel');
 
-const projectSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Project name is required'],
-    trim: true,
-    maxlength: [100, 'Name cannot exceed 100 characters']
-  },
-  slug: {
-    type: String,
-    unique: true,
-    lowercase: true
-  },
-  description: {
-    type: String,
-    maxlength: [1000, 'Description cannot exceed 1000 characters'],
-    default: ''
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  type: {
-    type: String,
-    enum: ['react', 'nextjs', 'vue', 'html', 'node', 'website', 'other'],
-    default: 'other'
-  },
-  source: {
-    type: String,
-    enum: ['upload', 'github', 'gitlab', 'url', 'local'],
-    required: true
-  },
-  sourceUrl: {
-    type: String,
-    default: ''
-  },
-  githubRepo: {
-    type: String,
-    default: ''
-  },
-  status: {
-    type: String,
-    enum: ['importing', 'ready', 'analyzing', 'analyzed', 'error'],
-    default: 'importing'
-  },
-  fileCount: { type: Number, default: 0 },
-  totalSize: { type: Number, default: 0 },
-  language: { type: String, default: '' },
-  framework: { type: String, default: '' },
-  files: [{
-    path: String,
-    name: String,
-    extension: String,
-    size: Number,
-    content: String,
-    language: String
-  }],
-  scores: {
-    overall: { type: Number, default: 0, min: 0, max: 100 },
-    performance: { type: Number, default: 0, min: 0, max: 100 },
-    accessibility: { type: Number, default: 0, min: 0, max: 100 },
-    seo: { type: Number, default: 0, min: 0, max: 100 },
-    security: { type: Number, default: 0, min: 0, max: 100 },
-    codeQuality: { type: Number, default: 0, min: 0, max: 100 },
-    maintainability: { type: Number, default: 0, min: 0, max: 100 }
-  },
-  analysis: {
-    lastAnalyzed: Date,
-    totalBugs: { type: Number, default: 0 },
-    criticalBugs: { type: Number, default: 0 },
-    warningBugs: { type: Number, default: 0 },
-    infoBugs: { type: Number, default: 0 },
-    fixedBugs: { type: Number, default: 0 }
-  },
-  settings: {
-    autoAnalyze: { type: Boolean, default: true },
-    notifyOnBugs: { type: Boolean, default: true },
-    analyzeOnPush: { type: Boolean, default: false }
-  },
-  tags: [String],
-  thumbnail: {
-    type: String,
-    default: ''
+class ProjectModel extends JsonModel {
+  constructor() {
+    super('Project');
   }
-}, {
-  timestamps: true
-});
 
-projectSchema.pre('save', function(next) {
-  if (!this.slug) {
-    this.slug = this.name.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
+  async create(data) {
+    if (!data.slug && data.name) {
+      data.slug = data.name.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
+    }
+    
+    // Default schema values
+    data.description = data.description || '';
+    data.type = data.type || 'other';
+    data.sourceUrl = data.sourceUrl || '';
+    data.githubRepo = data.githubRepo || '';
+    data.status = data.status || 'importing';
+    data.fileCount = data.fileCount || 0;
+    data.totalSize = data.totalSize || 0;
+    data.language = data.language || '';
+    data.framework = data.framework || '';
+    data.files = data.files || [];
+    data.scores = data.scores || {
+      overall: 0, performance: 0, accessibility: 0, seo: 0, security: 0, codeQuality: 0, maintainability: 0
+    };
+    data.analysis = data.analysis || {
+      totalBugs: 0, criticalBugs: 0, warningBugs: 0, infoBugs: 0, fixedBugs: 0
+    };
+    data.settings = data.settings || {
+      autoAnalyze: true, notifyOnBugs: true, analyzeOnPush: false
+    };
+    data.tags = data.tags || [];
+    data.thumbnail = data.thumbnail || '';
+
+    return super.create(data);
   }
-  next();
-});
+}
 
-projectSchema.index({ owner: 1, createdAt: -1 });
-projectSchema.index({ slug: 1 });
-projectSchema.index({ status: 1 });
-projectSchema.index({ name: 'text', description: 'text' });
-
-module.exports = mongoose.model('Project', projectSchema);
+module.exports = new ProjectModel();

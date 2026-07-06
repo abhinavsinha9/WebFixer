@@ -1,0 +1,11 @@
+[
+  {
+    "user": "fca5cba142eff7fc6cee5675",
+    "action": "user-signup",
+    "description": "Test User created an account",
+    "metadata": {},
+    "_id": "5688a5f8523343aa26655dc1",
+    "createdAt": "2026-07-06T12:13:58.499Z",
+    "updatedAt": "2026-07-06T12:13:58.499Z"
+  }
+]
