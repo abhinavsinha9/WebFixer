@@ -41,3 +41,6 @@ backend/uploads/*
 # Temp
 tmp/
 temp/
+
+# Virtual Environment
+venv/
