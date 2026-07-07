@@ -25,5 +25,59 @@
     "_id": "263b0f816575cfcf53e3c9f7",
     "createdAt": "2026-07-06T13:51:30.252Z",
     "updatedAt": "2026-07-06T13:51:30.252Z"
+  },
+  {
+    "user": "54a5c6265ea10bb5628c63fa",
+    "action": "user-signup",
+    "description": "Test User created an account",
+    "metadata": {},
+    "_id": "7e5e15d8319e0857cb4f246b",
+    "createdAt": "2026-07-06T15:29:59.980Z",
+    "updatedAt": "2026-07-06T15:29:59.980Z"
+  },
+  {
+    "user": "54a5c6265ea10bb5628c63fa",
+    "action": "user-login",
+    "description": "Test User logged in",
+    "metadata": {},
+    "_id": "cfb6378670577a06c72a6303",
+    "createdAt": "2026-07-06T15:30:00.320Z",
+    "updatedAt": "2026-07-06T15:30:00.320Z"
+  },
+  {
+    "user": "1cd3e55b049903f7d8be376c",
+    "action": "user-signup",
+    "description": "x created an account",
+    "metadata": {},
+    "_id": "866c2ba67c17d976f246e1a2",
+    "createdAt": "2026-07-07T09:30:18.202Z",
+    "updatedAt": "2026-07-07T09:30:18.202Z"
+  },
+  {
+    "user": "4b6b3cdffe71b590be8443fd",
+    "action": "user-signup",
+    "description": "x created an account",
+    "metadata": {},
+    "_id": "e3a4a14a7bd4a65ea934159b",
+    "createdAt": "2026-07-07T09:31:24.597Z",
+    "updatedAt": "2026-07-07T09:31:24.597Z"
+  },
+  {
+    "user": "67f21d6c744b91b5bf53edb1",
+    "action": "user-signup",
+    "description": "x created an account",
+    "metadata": {},
+    "_id": "2ca82623248f3d67b6e84bdc",
+    "createdAt": "2026-07-07T09:33:36.014Z",
+    "updatedAt": "2026-07-07T09:33:36.014Z"
+  },
+  {
+    "user": "5647be85c0cae04210ed59e0",
+    "action": "user-signup",
+    "description": "x created an account",
+    "metadata": {},
+    "_id": "30ec322ab4093eda0ad66461",
+    "createdAt": "2026-07-07T09:36:03.489Z",
+    "updatedAt": "2026-07-07T09:36:03.489Z"
   }
 ]

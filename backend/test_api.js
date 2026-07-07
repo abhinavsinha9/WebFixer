@@ -1,32 +1,37 @@
-const http = require('http');
+const axios = require('axios');
 
-const data = JSON.stringify({
-  name: "Test User",
-  email: "test2@example.com",
-  password: "password123"
-});
-
-const options = {
-  hostname: 'localhost',
-  port: 5000,
-  path: '/api/auth/login',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': data.length
+async function testAuthFlow() {
+  const api = axios.create({ baseURL: 'http://localhost:5000/api' });
+  
+  try {
+    const email = `testuser_${Date.now()}@example.com`;
+    console.log('1. Signing up user...');
+    const signupRes = await api.post('/auth/signup', {
+      name: 'Test User',
+      email,
+      password: 'Password123!'
+    });
+    console.log('Signup successful:', signupRes.data.success);
+    
+    console.log('2. Logging in...');
+    const loginRes = await api.post('/auth/login', {
+      email,
+      password: 'Password123!'
+    });
+    console.log('Login successful:', loginRes.data.success);
+    console.log('Token received:', !!loginRes.data.token);
+    
+    console.log('All tests passed!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Test failed:');
+    if (error.response) {
+      console.error(error.response.data);
+    } else {
+      console.error(error.message);
+    }
+    process.exit(1);
   }
-};
+}
 
-const req = http.request(options, res => {
-  console.log(`statusCode: ${res.statusCode}`);
-  res.on('data', d => {
-    process.stdout.write(d);
-  });
-});
-
-req.on('error', error => {
-  console.error(error);
-});
-
-req.write(data);
-req.end();
+testAuthFlow();

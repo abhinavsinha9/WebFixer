@@ -100,7 +100,8 @@ class JsonQuery {
 class JsonModel {
   constructor(modelName, methods = {}, statics = {}) {
     this.modelName = modelName;
-    this.filePath = path.join(__dirname, '..', 'data', `${modelName.toLowerCase()}s.json`);
+    const dataDir = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
+    this.filePath = path.join(dataDir, `${modelName.toLowerCase()}s.json`);
     this.methods = methods;
     Object.assign(this, statics);
     // ensure file immediately so methods don't crash
